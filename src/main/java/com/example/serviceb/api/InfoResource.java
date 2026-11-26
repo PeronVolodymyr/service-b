@@ -26,7 +26,9 @@ public class InfoResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public InfoResponse info() {
-        LOG.info("Handling info request");
-        return new InfoResponse(serviceName, "Hello from Service B", Instant.now());
+        LOG.info("GET /api/v1/info request received");
+        InfoResponse response = new InfoResponse(serviceName, "Hello from Service B", Instant.now());
+        LOG.infof("GET /api/v1/info response: %s", response);
+        return response;
     }
 }
