@@ -73,14 +73,18 @@ curl http://localhost:8080/q/health/ready
 
 JVM runner: `java -jar target/quarkus-app/quarkus-run.jar`
 
-Stock containerfiles live under `src/main/docker/` for a later image-build iteration.
+## Container image
+
+Build and push an **immutable** tag to the local k3d registry (cluster must already be up via `gitops` `make cluster-up`):
+
+```bash
+./scripts/build-and-push.sh 0.1.0
+```
+
+Override registry if needed: `REGISTRY=k3d-quarkus-registry.localhost:5001 ./scripts/build-and-push.sh 0.1.0`
+
+Promotion (Kustomize `newTag` bump + ArgoCD sync) is done from [gitops](../gitops), not here.
 
 ## Design notes
 
 See [docs/adr/0001-service-b-api-and-observability.md](docs/adr/0001-service-b-api-and-observability.md).
-
-## Out of scope (later)
-
-- Local Kubernetes / ArgoCD / GitOps manifests
-- Immutable image tagging and promotion scripts
-- Service A REST client, resilience, and WireMock tests
